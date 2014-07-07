@@ -1,0 +1,33 @@
+<%= form_tag({}) do -%>
+  <div class="autoscroll">
+  <table class="list related-issues">
+  <caption><%= l(:label_related_issues) %></caption>
+	<thead>
+      <tr>
+        <th>#</th>
+        <th>Проект</th>
+        <th>Трекер</th>
+        <th>Тема</th>
+        <th>Объекты БД</th>
+        <th>Данные БД</th>
+        <th>Шаблоны отчетов</th>
+      </tr>
+    </thead>
+    <tbody>
+  <% reset_cycle %>
+  <%- @issues.each do |issue| -%>
+    <tr class="issue <%= cycle('odd', 'even') %> hascontextmenu">
+      <td class="checkbox"><%= check_box_tag 'ids[]', issue.id, false, :id => nil %></td>
+      <td class="id"><a href="<%= issue_path(issue) %>" target="_blank"><%= issue.id %></a></td>
+      <td class="subject"><a href="<%= project_path(issue.project) %>" target="_blank"><%= issue.project.name %></a></td>
+      <td class="tracker"><%= issue.tracker.name %></td>
+      <td class="subject"><a href="<%= issue_path(issue) %>" target="_blank"><%= issue.subject %></a></td>
+      <td class="multiline"><%= format_issue_hashes(issue.get_dbobjects) %></td>
+      <td class="multiline"><%= format_issue_hashes(issue.get_dbdata) %></td>
+      <td class="multiline"><%= issue.get_report_templates.join("\r\n") %></td>
+    </tr>
+  <% end %>
+  </tbody>
+  </table>
+  </div>
+<% end %>

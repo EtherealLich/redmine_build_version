@@ -1,0 +1,8 @@
+ru:
+  label_version_revisions: "Ревизии"
+  label_version_dbobjects: "Объекты БД"
+  label_version_dbdata: "Данные БД"
+  label_version_report_templates: "Шаблоны отчетов"
+  button_show_build_version: "Сборка версии"
+  button_show_build_version_by_revisions: "Сборка по ревизиям"
+  button_show_build_version_by_issues: "Сборка по задачам"

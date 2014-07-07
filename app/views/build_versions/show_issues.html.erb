@@ -1,0 +1,52 @@
+<%= stylesheet_link_tag 'build_version.css', :plugin => 'redmine_build_version' %>
+<div class="contextual">
+<%= link_to(l(:button_show_build_version_by_revisions), build_versions_revisions_path, :class => 'icon icon-build-version') %>
+</div>
+
+<h2>Задачи по номерам</h2>
+
+<%= form_tag("/build_versions/issues", method: "post", :id => 'issue_form', :class => 'multiple-submit') do %>
+  <%= label_tag(:issues_list, "Список номеров задач (через запятую):") %><br/>
+  <%= text_area_tag(:issues_list, @issues_str || '', :size => "100x10", :id => 'issues_list') %><br/>
+  <%= submit_tag("Список задач", :id => 'submit_btn1') %>
+<% end %>
+
+<% if @issues.present? %>
+<div id="roadmap">
+
+<div id="version-summary">
+
+<%= render :partial => 'revisions', :locals => {:revisions => @revisions} %>
+
+<%= render :partial => 'dbobjects', :locals => {:dbobjects => @dbobjects} %>
+
+<%= render :partial => 'dbdata', :locals => {:dbdata => @dbdata} %>
+
+<%= render :partial => 'report_templates', :locals => {:report_templates => @report_templates} %>
+
+</div>
+
+<%= render :partial => 'issues_table', :locals => {:issues => @issues} %>
+
+<p class="other-formats"><%= l(:label_export_to)%> <%= link_to('CSV', '#', :id => 'export_link') %></p>
+<%= context_menu issues_context_menu_path %>
+</div>
+<% end %>
+
+<script type="text/javascript">
+$( document ).ready(function() {
+  $("#export_link").click(
+    function(){
+        $('#issue_form').attr('action', '/build_versions/issues.csv')
+        $('#issue_form').submit();
+        $('#issue_form').attr('action', '/build_versions/issues')
+    }
+  );
+
+  $('#issue_form').submit(function(e) {
+    if ($('#issues_list').val() == "") {
+      return false;
+    }
+  });
+});
+</script>

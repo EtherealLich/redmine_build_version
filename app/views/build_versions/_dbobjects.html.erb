@@ -1,0 +1,5 @@
+<div id="version_dbobjects">
+  <fieldset class="multiline"><legend><%= l(:label_version_dbobjects) -%></legend><% dbobjects.each do |k, v| -%><%= k.strip -%> <%= v.map{|issue| link_to_issue(issue, :subject => false, :tracker => false)}.join(", ").html_safe %>
+  <% end %>
+  </fieldset>
+</div>

@@ -1,0 +1,6 @@
+# Маска файла шаблона отчета
+report_template_substring : "rptdesign"
+# Название поля с объектами БД
+dbobjects_field_name : "Объекты в БД"
+# Название поля с данными БД
+dbdata_field_name : "Данные в БД"

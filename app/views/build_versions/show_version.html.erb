@@ -1,0 +1,53 @@
+<% html_title @version.name %>
+
+<%= stylesheet_link_tag 'build_version.css', :plugin => 'redmine_build_version' %>
+<div class="contextual">
+<%= link_to(l(:button_show_build_version_by_revisions), build_versions_revisions_path, :class => 'icon icon-build-version') %>
+<%= link_to(l(:button_show_build_version_by_issues), build_versions_issues_path, :class => 'icon icon-build-version') %>
+</div>
+
+
+<h2><%= h(@version.name) %></h2>
+
+<% if @issues.present? %>
+
+<div id="roadmap">
+<%= render :partial => 'versions/overview', :locals => {:version => @version} %>
+
+<div id="version-summary">
+<% if @version.estimated_hours > 0 || User.current.allowed_to?(:view_time_entries, @project) %>
+<fieldset class="time-tracking"><legend><%= l(:label_time_tracking) %></legend>
+<table>
+<tr>
+    <th><%= l(:field_estimated_hours) %></th>
+    <td class="total-hours"><%= html_hours(l_hours(@version.estimated_hours)) %></td>
+</tr>
+<% if User.current.allowed_to?(:view_time_entries, @project) %>
+<tr>
+    <th><%= l(:label_spent_time) %></th>
+    <td class="total-hours"><%= html_hours(l_hours(@version.spent_hours)) %></td>
+</tr>
+<% end %>
+</table>
+</fieldset>
+
+<% end %>
+
+
+
+<%= render :partial => 'revisions', :locals => {:revisions => @version.get_revisions} %>
+
+<%= render :partial => 'dbobjects', :locals => {:dbobjects => @version.get_dbobjects} %>
+
+<%= render :partial => 'dbdata', :locals => {:dbdata => @version.get_dbdata} %>
+
+<%= render :partial => 'report_templates', :locals => {:report_templates => @version.get_report_templates} %>
+
+</div>
+
+<%= render :partial => 'issues_table', :locals => {:issues => @issues} %>
+
+<p class="other-formats"><%= l(:label_export_to)%> <%= link_to('CSV', build_version_path(@version, :format => 'csv'), :id => 'export_link') %></p>
+<%= context_menu issues_context_menu_path %>
+<% end %>
+</div>

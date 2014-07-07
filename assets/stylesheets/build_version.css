@@ -1,0 +1,5 @@
+tr.issue td.multiline { white-space: pre-wrap; text-align: left; }
+
+.multiline { white-space: pre-wrap; text-align: left; }
+
+.icon-build-version  { background-image: url(../images/build.png); }
